@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.smartcity.mapper.extend.CarouselExtendMapper">
+    <resultMap id="BaseResultMap" type="com.briup.smartcity.bean.Carousel">
+        <id column="carousel_id" jdbcType="INTEGER" property="carouselId" />
+        <result column="carousel_name" jdbcType="VARCHAR" property="carouselName" />
+        <result column="carousel_info" jdbcType="VARCHAR" property="carouselInfo" />
+        <result column="carousel_url" jdbcType="VARCHAR" property="carouselUrl" />
+        <result column="carousel_status" jdbcType="INTEGER" property="carouselStatus" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        carousel_id, carousel_name, carousel_info, carousel_url, carousel_status
+    </sql>
+    <select id="findAllCarousel" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        from sc_carousel
+    </select>
+    <select id="findYesCarousel" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        from sc_carousel
+        where carousel_status=1
+    </select>
+
+
+</mapper>
