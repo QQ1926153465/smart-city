@@ -38,8 +38,12 @@ public class CarouselServiceImpl implements ICarouselService {
     }
 
     @Override
-    public void deleteById(int id) throws ServiceException {
+    public int deleteById(int id) throws ServiceException {
         int i = mapper.deleteByPrimaryKey(id);
+        if (i==0){
+            throw new ServiceException("轮播图不存在");
+        }
+        return i;
     }
 
     @Override
@@ -50,6 +54,9 @@ public class CarouselServiceImpl implements ICarouselService {
     @Override
     public int updateCarousel(Carousel carousel) throws ServiceException {
         int i = mapper.updateByPrimaryKeySelective(carousel);
+        if (i==0){
+            throw new ServiceException("id不存在");
+        }
         return i;
     }
 

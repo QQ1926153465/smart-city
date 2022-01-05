@@ -16,7 +16,7 @@ public interface ICarouselService {
     PageInfo<Carousel> findAll(int pageNum, int pageSize) throws ServiceException;
 
     // 通过id删除轮播图信息
-    void deleteById(int id) throws ServiceException;
+    int deleteById(int id) throws ServiceException;
 
     // 保存轮播图信息
     void saveCarousel(Carousel carousel)throws ServiceException;

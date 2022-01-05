@@ -40,8 +40,10 @@ public class BaseUserServiceImpl implements IBaseUserService  {
             //密码错误
             throw new ServiceException("密码错误");
         }
-        //账号被锁定
-//        if (user.getRole()==)
+//        账号被锁定
+        if (user.getStatus()==1){
+            throw new ServiceException(" 账号被锁定");
+        }
 
         //通过逻辑判断，登录成功，返回token
         HashMap<String, Object> userInfo = new HashMap<>();

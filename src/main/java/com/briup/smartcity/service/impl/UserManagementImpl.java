@@ -34,6 +34,9 @@ public class UserManagementImpl implements IUserManagementService {
     @Override
     public int deleteUserById(Integer id) {
         int i = mapper.deleteByPrimaryKey(id);
+        if (i==0){
+            throw new ServiceException("用户不存在");
+        }
         return i;
     }
 

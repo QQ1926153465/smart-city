@@ -3,6 +3,7 @@ package com.briup.smartcity.web.controller;
 
 import com.briup.smartcity.aop.Logging;
 import com.briup.smartcity.bean.BaseUser;
+import com.briup.smartcity.exception.ServiceException;
 import com.briup.smartcity.service.IBaseUserService;
 import com.briup.smartcity.service.IUserManagementService;
 import com.briup.smartcity.utils.Result;
@@ -33,6 +34,7 @@ public class UserManagementController {
     @ApiOperation("通过id删除用户")
     @ApiImplicitParam(name = "id",value = "需要删除的用户的id",dataType = "int")
     public Result deleteUserById(Integer id){
+
         int i = service.deleteUserById(id);
 
         return ResultUtil.success(i);
