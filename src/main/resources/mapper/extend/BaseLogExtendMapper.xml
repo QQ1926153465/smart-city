@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.briup.smartcity.mapper.extend.BaseLogExtendMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.briup.smartcity.bean.BaseLog">
+        <id column="log_id" jdbcType="BIGINT" property="logId" />
+        <result column="log_username" jdbcType="VARCHAR" property="logUsername" />
+        <result column="log_realname" jdbcType="VARCHAR" property="logRealname" />
+        <result column="log_request_method" jdbcType="VARCHAR" property="logRequestMethod" />
+        <result column="log_request_uri" jdbcType="VARCHAR" property="logRequestUri" />
+        <result column="log_time" jdbcType="TIMESTAMP" property="logTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    log_id, log_username, log_realname, log_request_method, log_request_uri, log_time
+  </sql>
+
+    <select id="findAll" resultMap="BaseResultMap">
+
+        select
+        <include refid="Base_Column_List" />
+        from base_log
+
+
+    </select>
+</mapper>

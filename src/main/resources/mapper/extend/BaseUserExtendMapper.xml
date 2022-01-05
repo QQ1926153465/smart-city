@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.briup.smartcity.mapper.extend.BaseUserExtendMapper">
+<!--    结果集映射-->
+    <resultMap id="BaseResultMap" type="com.briup.smartcity.bean.BaseUser">
+        <id column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+        <result column="realname" jdbcType="VARCHAR" property="realname" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="gender" jdbcType="INTEGER" property="gender" />
+        <result column="dob" jdbcType="DATE" property="dob" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="role" jdbcType="INTEGER" property="role" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    user_id, username, password, telephone, realname, icon, gender, dob, email, register_time,
+    status, role
+  </sql>
+    <select id="selectBaseUserByUsername" resultMap="BaseResultMap" >
+        select <include refid="Base_Column_List" /> from base_user where username = #{username}
+
+
+
+
+    </select>
+</mapper>
