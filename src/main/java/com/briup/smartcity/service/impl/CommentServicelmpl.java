@@ -36,9 +36,13 @@ public  class CommentServicelmpl implements ICommentService{
     }
 
     @Override
-    public void deleteById(int id) throws ServiceException {
+    public int deleteById(int id) throws ServiceException {
         //删除
-        mapper.deleteByPrimaryKey(id);
+        int i = mapper.deleteByPrimaryKey(id);
+        if (i==0){
+            throw new ServiceException("id不存在");
+        }
+        return i;
     }
 
     @Override

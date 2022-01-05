@@ -77,8 +77,8 @@ public class CommentController {
             dataType = "int"
     )})
     public Result deleteById(int id) {
-        service.deleteById(id);
-        return ResultUtil.success();
+        int i = service.deleteById(id);
+        return ResultUtil.success(i);
     }
 }
 

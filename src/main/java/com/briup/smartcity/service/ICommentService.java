@@ -15,7 +15,7 @@ public interface ICommentService {
 	PageInfo<Comment> pageQuery(int pageNum, int pageSize, String keywords);
 
 	// 通过id删除评论
-	void deleteById(int id) throws ServiceException;
+	int deleteById(int id) throws ServiceException;
 
 	// 评论删除评论
 	void batchDelete(int[] ids) throws ServiceException;
