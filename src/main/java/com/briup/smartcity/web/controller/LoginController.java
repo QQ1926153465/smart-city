@@ -1,6 +1,7 @@
 package com.briup.smartcity.web.controller;
 
 import com.briup.smartcity.service.IBaseUserService;
+import com.briup.smartcity.utils.JwtUtil;
 import com.briup.smartcity.utils.Result;
 import com.briup.smartcity.utils.ResultUtil;
 import io.swagger.annotations.Api;
@@ -28,9 +29,9 @@ public class LoginController {
 
     }
     @ApiOperation("退出登录")
-    @PostMapping(value = "loginOut")
+    @PostMapping(value = "/logout")
     public Result loginOut(){
 
-        return ResultUtil.success();
+        return ResultUtil.success("退出成功");
     }
 }
