@@ -24,9 +24,13 @@
      WHERE comment_content like CONCAT('%',#{keyword},'%')
     </select>
     <delete id="deleteCommentBySomeId">
-        DELETE<include refid="Base_Column_List"/>
+        DELETE
         FROM sc_comment
-        WHERE comment_id= #{ids}
+        <where>
+            <foreach collection="ids" open="comment_id in (" item="id" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
     </delete>
 
 </mapper>
