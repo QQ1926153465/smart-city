@@ -3,18 +3,13 @@ package com.briup.smartcity.service.impl;
 import com.briup.smartcity.bean.Carousel;
 import com.briup.smartcity.exception.ServiceException;
 import com.briup.smartcity.mapper.CarouselMapper;
+import com.briup.smartcity.mapper.extend.CarouselExtendMapper;
 import com.briup.smartcity.service.ICarouselService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @Service
@@ -22,18 +17,14 @@ public class CarouselServiceImpl implements ICarouselService {
     @Autowired
     private CarouselMapper mapper;
 
+    @Autowired
+    private CarouselExtendMapper extendMapper;
+
     @Override
     public PageInfo<Carousel> findAll(int pageNum, int pageSize) throws ServiceException {
-        //1.设置分页信息
         PageHelper.startPage(pageNum,pageSize,true);
-        //2.执行分页查询
-        List<Carousel> list = mapper.findAllCarousel();
-        PageInfo<Carousel> pageInfo = new PageInfo<>(list);
-        //3.获取查询数据
-        System.out.println("分页数据："+pageInfo.getList());
-        System.out.println("分页数量："+pageInfo.getPageSize());
-        System.out.println("当前页数："+pageInfo.getPageNum());
-
+        List<Carousel> carousels = mapper.findallCarousel();
+        PageInfo<Carousel> pageInfo = new PageInfo<>(carousels);
         return pageInfo;
     }
 
@@ -48,32 +39,45 @@ public class CarouselServiceImpl implements ICarouselService {
 
     @Override
     public void saveCarousel(Carousel carousel) throws ServiceException {
-
+        Integer status = carousel.getCarouselStatus();
+        if (status==1){
+            List<Carousel> carousels = extendMapper.findyesCarousel();
+            if (carousels.size()==1) {
+                throw new ServiceException("有其他配置处于启动状态，无法保存");
+            }
+        }
+            mapper.insert(carousel);
     }
 
     @Override
-    public int updateCarousel(Carousel carousel) throws ServiceException {
-        int i = mapper.updateByPrimaryKeySelective(carousel);
-        if (i==0){
-            throw new ServiceException("id不存在");
+    public void updateCarousel(Carousel carousel) throws ServiceException {
+        Integer id = carousel.getCarouselId();
+        List<Carousel> c= mapper.findallCarousel();
+        for (int i = 0; i < c.size(); i++) {
+            Integer idd = c.get(i).getCarouselId();
+            if (id.equals(idd))
+            {
+                Integer status = carousel.getCarouselStatus();
+                if (status==1){
+                    List<Carousel> s = extendMapper.findyesCarousel();
+                    if (s.size()==1) {
+                        throw new ServiceException("有其他配置处于启动状态，无法更新");
+                    }
+                }
+                mapper.updateByPrimaryKey(carousel);
+                break;
+            }
+            else {
+                throw new ServiceException("轮播图id不存在");
+            }
         }
-        return i;
+
+
     }
 
     @Override
     public List<Carousel> findYesCarousel() throws ServiceException {
-        List<Carousel> allCarousel = mapper.findYesCarousel();
-
-        return allCarousel;
+        List<Carousel> yesCarousel = mapper.findYesCarousel();
+        return yesCarousel;
     }
-
-    @Override
-    public int SaveCarousel(Carousel carousel) {
-
-        int i = mapper.insertSelective(carousel);
-
-        return i;
-    }
-
-
 }
