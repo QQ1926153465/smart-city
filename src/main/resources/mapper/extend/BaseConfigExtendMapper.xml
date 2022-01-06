@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.briup.smartcity.mapper.extend.BaseConfigExtendMapper">
+
+    <resultMap id="BaseResultMap" type="com.briup.smartcity.bean.BaseConfig">
+        <id column="config_id" jdbcType="INTEGER" property="configId" />
+        <result column="config_name" jdbcType="VARCHAR" property="configName" />
+        <result column="config_info" jdbcType="VARCHAR" property="configInfo" />
+        <result column="config_icon" jdbcType="VARCHAR" property="configIcon" />
+        <result column="config_status" jdbcType="INTEGER" property="configStatus" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        config_id, config_name, config_info, config_icon, config_status
+    </sql>
+    <select id="findAllStatusYes" resultType="com.briup.smartcity.bean.BaseConfig">
+
+        select
+                 <include refid="Base_Column_List" />
+                    from base_config  where config_status = 1
+
+
+
+    </select>
+</mapper>
