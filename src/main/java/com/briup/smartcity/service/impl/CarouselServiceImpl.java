@@ -7,6 +7,10 @@ import com.briup.smartcity.mapper.extend.CarouselExtendMapper;
 import com.briup.smartcity.service.ICarouselService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,41 +43,41 @@ public class CarouselServiceImpl implements ICarouselService {
 
     @Override
     public void saveCarousel(Carousel carousel) throws ServiceException {
-        Integer status = carousel.getCarouselStatus();
-        if (status==1){
-            List<Carousel> carousels = extendMapper.findyesCarousel();
-            if (carousels.size()==1) {
-                throw new ServiceException("有其他配置处于启动状态，无法保存");
-            }
-        }
             mapper.insert(carousel);
     }
 
     @Override
     public void updateCarousel(Carousel carousel) throws ServiceException {
         Integer id = carousel.getCarouselId();
-        List<Carousel> c= mapper.findallCarousel();
-        for (int i = 0; i < c.size(); i++) {
-            Integer idd = c.get(i).getCarouselId();
-            if (id.equals(idd))
-            {
-                Integer status = carousel.getCarouselStatus();
-                if (status==1){
-                    List<Carousel> s = extendMapper.findyesCarousel();
-                    if (s.size()==1) {
-                        throw new ServiceException("有其他配置处于启动状态，无法更新");
-                    }
-                }
-                mapper.updateByPrimaryKey(carousel);
-                break;
-            }
-            else {
-                throw new ServiceException("轮播图id不存在");
-            }
+
+        Carousel carousel1 = mapper.selectByPrimaryKey(id);
+        if (carousel1==null){
+            throw new ServiceException("id不存在，无法更新");
+        }
+        mapper.updateByPrimaryKeySelective(carousel);
+//        List<Carousel> c= mapper.findallCarousel();
+//        for (int i = 0; i < c.size(); i++) {
+//            Integer idd = c.get(i).getCarouselId();
+//            if (id==(idd))
+//            {
+//                Integer status = carousel.getCarouselStatus();
+//                if (status==1){
+//                    List<Carousel> s = extendMapper.findyesCarousel();
+//                    if (s.size()==1) {
+//                        throw new ServiceException("有其他配置处于启动状态，无法更新");
+//                    }
+//                }
+//                mapper.updateByPrimaryKey(carousel);
+//                  break;
+//            }
+//            else{
+//                throw new ServiceException("id不存在");
         }
 
+//        }
 
-    }
+
+
 
     @Override
     public List<Carousel> findYesCarousel() throws ServiceException {

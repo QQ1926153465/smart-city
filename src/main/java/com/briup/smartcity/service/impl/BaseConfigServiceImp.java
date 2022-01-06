@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+
 public class BaseConfigServiceImp implements IBaseConfigService {
     @Autowired
     private BaseConfigMapper mapper;
@@ -21,61 +22,72 @@ public class BaseConfigServiceImp implements IBaseConfigService {
 
     @Override
     public void saveConfig(BaseConfig baseConfig) throws ServiceException {
-        Integer status = baseConfig.getConfigStatus();
-        if(status==1) {
-            List<BaseConfig>baseConfigs =extendMapper.findAllStatusYes();
-            if (baseConfigs.size()==1) {
-                throw new ServiceException("无法保存，有其他配置处于启动状态");
-            }
-        }
             mapper.insert(baseConfig);
 
     }
 
     @Override
     public void updateConfig(BaseConfig baseConfig) throws ServiceException {
-        List<BaseConfig> baseConfigss = mapper.fingdAllByPageHeple();
         Integer id =baseConfig.getConfigId();
-        for(int i=0;i<baseConfigss.size();i++)
+        BaseConfig baseConfig1 = mapper.selectByPrimaryKey(id);
+        if (baseConfig1==null)
         {
-            if(id == baseConfigss.get(i).getConfigId())
-            {
-                Integer status = baseConfig.getConfigStatus();
-                if (status==1) {
-                    List<BaseConfig> baseConfigs =extendMapper.findAllStatusYes();
-                    if (baseConfigs.size()==1) {
-                        throw new ServiceException("无法更新，有其他配置处于启动状态");
-                    }
-                }
-                mapper.updateByPrimaryKey(baseConfig);
-                break;
-            }
-            else{
             throw new ServiceException("id不存在");
         }
-
-        }
+//        for(int i=0;i<baseConfigss.size();i++)
+//        {
+//            if(id == baseConfigss.get(i).getConfigId())
+//            {
+//                Integer status = baseConfig.getConfigStatus();
+//                if (status==1) {
+//                    List<BaseConfig> baseConfigs =extendMapper.findAllStatusYes();
+//                    if (baseConfigs.size()==1) {
+//                        throw new ServiceException("无法更新，有其他配置处于启动状态");
+//                    }
+//                }
+//                mapper.updateByPrimaryKey(baseConfig);
+//                break;
+//            }
+//            else{
+//            throw new ServiceException("id不存在");
+//        }
+//
+//        }
 
     }
 
     @Override
     public void changeConfigStatus(int id, int status) throws ServiceException {
         List<BaseConfig> baseConfigss = mapper.fingdAllByPageHeple();
-        for(int i=0;i<baseConfigss.size();i++)
-        {
-            if(id == baseConfigss.get(i).getConfigId())
-            {
-                if (status==1){
-                    List<BaseConfig> baseConfigs = extendMapper.findAllStatusYes();
-                    if(baseConfigs.size()==1){
-                        throw new ServiceException("无法更新,有其他配置处于启动状态");
-                    }
+            if (status == 1) {
+                List<BaseConfig> baseConfigs = extendMapper.findAllStatusYes();
+                if (baseConfigs.size() == 1) {
+                    throw new ServiceException("无法更新,有其他配置处于启动状态");
                 }
-                mapper.upcongficstatus(id, status);
-                break;
+
             }
+        BaseConfig baseConfig = mapper.selectByPrimaryKey(id);
+        if (baseConfig==null)
+        {
             throw new ServiceException("id不存在");
         }
+        mapper.upcongficstatus(id,status);
+//        List<BaseConfig> baseConfigss = mapper.fingdAllByPageHeple();
+//        for(int i=0;i<baseConfigss.size();i++)
+//        {
+//            if(id == baseConfigss.get(i).getConfigId())
+//            {
+//                if (status==1){
+//                    List<BaseConfig> baseConfigs = extendMapper.findAllStatusYes();
+//                    if(baseConfigs.size()==1){
+//                        throw new ServiceException("无法更新,有其他配置处于启动状态");
+//                    }
+//                }
+//                mapper.upcongficstatus(id, status);
+//                break;
+//            }
+//            throw new ServiceException("id不存在");
+//        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.briup.smartcity.web.controller;
 
 
+import com.briup.smartcity.aop.Logging;
 import com.briup.smartcity.bean.Category;
 import com.briup.smartcity.service.ICategoryService;
 import com.briup.smartcity.utils.Result;
@@ -14,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@Logging()
 @Api(tags = "资讯栏目模块")
 @RestController
 @RequestMapping("/auth/category")

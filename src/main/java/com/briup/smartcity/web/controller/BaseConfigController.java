@@ -1,6 +1,7 @@
 package com.briup.smartcity.web.controller;
 
 
+import com.briup.smartcity.aop.Logging;
 import com.briup.smartcity.bean.BaseConfig;
 import com.briup.smartcity.service.IBaseConfigService;
 import com.briup.smartcity.utils.Result;
@@ -12,7 +13,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@Logging()
 @Api(tags = "系统配置模块")
 @RestController
 @RequestMapping("/auth/config")

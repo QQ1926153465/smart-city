@@ -1,5 +1,6 @@
 package com.briup.smartcity.web.controller;
 
+import com.briup.smartcity.aop.Logging;
 import com.briup.smartcity.bean.Carousel;
 import com.briup.smartcity.service.ICarouselService;
 import com.briup.smartcity.utils.Result;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@Logging()
 @Api(tags = "轮播图模块")
 @RestController
 @RequestMapping("/auth/carousel")

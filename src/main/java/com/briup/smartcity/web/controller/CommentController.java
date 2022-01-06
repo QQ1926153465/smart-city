@@ -1,5 +1,6 @@
 package com.briup.smartcity.web.controller;
 
+import com.briup.smartcity.aop.Logging;
 import com.briup.smartcity.bean.Comment;
 import com.briup.smartcity.service.ICommentService;
 import com.briup.smartcity.utils.Result;
@@ -11,7 +12,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@Logging()
 @Api(tags = "评论管理")
 @RestController
 @RequestMapping("/auth/comment")
