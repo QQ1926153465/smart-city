@@ -21,7 +21,7 @@ public class BaseConfigController {
 
     @Autowired
     private IBaseConfigService service;
-
+    @Logging()
     @GetMapping("/current/config/yes")
     @ApiOperation("查询当前启用的系统配置")
     public Result Config(){
@@ -30,7 +30,7 @@ public class BaseConfigController {
         System.out.println(baseConfig);
         return ResultUtil.success(baseConfig);
     }
-
+    @Logging()
     @DeleteMapping("/deleteById")
     @ApiOperation("通过id删除配置信息")
     @ApiImplicitParam(name = "id",value = "id",dataType = "int")
@@ -38,7 +38,7 @@ public class BaseConfigController {
         int i = service.deleteById(id);
         return  ResultUtil.success(i);
     }
-
+    @Logging()
     @GetMapping ("/page/query")
     @ApiOperation("分页查询配置信息")
     @ApiImplicitParams({
@@ -49,6 +49,8 @@ public class BaseConfigController {
         PageInfo<BaseConfig> allWithPage = service.findAllWithPage(pageNum, pageSize);
         return ResultUtil.success(allWithPage);
     }
+
+    @Logging()
     @PostMapping("/save")
     @ApiOperation("保存配置信息")
     @ApiImplicitParams({

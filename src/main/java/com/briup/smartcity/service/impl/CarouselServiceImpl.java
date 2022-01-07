@@ -34,10 +34,16 @@ public class CarouselServiceImpl implements ICarouselService {
 
     @Override
     public int deleteById(int id) throws ServiceException {
+
+        if (mapper.selectByPrimaryKey(id).getCarouselStatus()==1 ){
+            throw new ServiceException("不能删除已经启用的轮播图");
+        }
+
         int i = mapper.deleteByPrimaryKey(id);
         if (i==0){
             throw new ServiceException("轮播图不存在");
         }
+
         return i;
     }
 
@@ -53,6 +59,11 @@ public class CarouselServiceImpl implements ICarouselService {
         Carousel carousel1 = mapper.selectByPrimaryKey(id);
         if (carousel1==null){
             throw new ServiceException("id不存在，无法更新");
+        }
+        if(mapper.findYesCarousel().size()==1 && carousel.getCarouselStatus()==0){
+            throw new ServiceException("最少启用一个轮播图，无法更新");
+        }else if(mapper.findYesCarousel().size()==6 && carousel.getCarouselStatus()==1 ){
+            throw new ServiceException("最多启用六个轮播图，无法更新");
         }
         mapper.updateByPrimaryKeySelective(carousel);
 //        List<Carousel> c= mapper.findallCarousel();

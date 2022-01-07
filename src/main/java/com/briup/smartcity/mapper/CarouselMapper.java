@@ -15,6 +15,7 @@ public interface CarouselMapper {
 
     Carousel selectByPrimaryKey(Integer carouselId);
 
+
     int updateByPrimaryKeySelective(Carousel record);
 
     int updateByPrimaryKey(Carousel record);

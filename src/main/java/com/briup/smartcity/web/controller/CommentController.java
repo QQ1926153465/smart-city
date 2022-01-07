@@ -20,7 +20,7 @@ public class CommentController {
 
     @Autowired
     private ICommentService service;
-
+    @Logging()
     @ApiOperation("分页查询评论信息")
     @GetMapping(value = "/pageQuery")
     @ApiImplicitParams({@ApiImplicitParam(
@@ -41,7 +41,7 @@ public class CommentController {
         return ResultUtil.success(pageInfo);
     }
 
-
+    @Logging()
     @ApiOperation("审核评论状态")
     @PutMapping(value = "/check")
     @ApiImplicitParams({@ApiImplicitParam(
@@ -56,7 +56,7 @@ public class CommentController {
         return ResultUtil.success();
     }
 
-
+    @Logging()
     @ApiOperation("批量删除评论")
     @DeleteMapping(value = "/batchDelete")
     @ApiImplicitParams({@ApiImplicitParam(
@@ -70,6 +70,10 @@ public class CommentController {
         return ResultUtil.success();
     }
 
+
+
+
+    @Logging()
     @ApiOperation("通过id删除评论信息")
     @DeleteMapping(value = "/deleteById")
     @ApiImplicitParams({@ApiImplicitParam(

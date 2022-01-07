@@ -22,7 +22,7 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     private ICategoryService service;
-
+    @Logging()
     @ApiOperation("分页查看栏目信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum",value = "当前页",dataType = "int"),
@@ -34,7 +34,7 @@ public class CategoryController {
         PageInfo<Category> pageInfo = service.pageQueryAll(pageNum, pageSize);
         return ResultUtil.success(pageInfo);
     }
-
+    @Logging()
     @ApiOperation("通过id删除栏目")
     @DeleteMapping("/deleteById")
     public Result deleteById(int id){
@@ -42,14 +42,14 @@ public class CategoryController {
         service.deleteById(id);
         return ResultUtil.success();
     }
-
+    @Logging()
     @ApiOperation("查找所有栏目不分页")
     @GetMapping("/find/all")
     public Result findAll(){
         List<Category> list = service.findAll();
         return ResultUtil.success(list);
     }
-
+    @Logging()
     @ApiOperation("批量删除栏目")
     @DeleteMapping("/batchDelete")
     public Result batchDelete(int[] ids){
@@ -57,7 +57,7 @@ public class CategoryController {
         return ResultUtil.success();
 
     }
-
+    @Logging()
     @ApiOperation("保存栏目信息")
     @PostMapping("/save")
     @ApiImplicitParams({
@@ -72,7 +72,7 @@ public class CategoryController {
         service.saveCategory(category);
         return ResultUtil.success();
     }
-
+    @Logging()
     @ApiOperation("更新栏目信息")
     @PutMapping("/update")
     @ApiImplicitParams({

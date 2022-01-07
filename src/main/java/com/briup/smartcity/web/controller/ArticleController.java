@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class ArticleController {
     @Autowired
     private IArticleService service;
+    @Logging()
     @ApiOperation("通过id删除")
     @DeleteMapping("/auth/article/deleteById")
     public Result deleteById(int id){
@@ -27,20 +28,22 @@ public class ArticleController {
         return ResultUtil.success();
     }
 
-
+    @Logging()
     @ApiOperation("通过ID获取资讯详情")
     @GetMapping("/auth/article/findById")
     public  Result SelectById(int id){
         ArticleExtend articleExtend = (ArticleExtend) service.findByIdWithCategoryAndUser(id);
         return  ResultUtil.success(articleExtend);
     }
+
+    @Logging()
     @ApiOperation("通过id更新状态")
     @PutMapping("/auth/article/changeStatus")
     public  Result changeStatus(Integer id,Integer status){
         service.changeStatus(id,status);
         return ResultUtil.success(status);
     }
-
+    @Logging()
     @ApiOperation("更新保存信息")
     @PostMapping("/auth/article/saveOrUpdate")
     public Result saveOrUpdate(Article article){

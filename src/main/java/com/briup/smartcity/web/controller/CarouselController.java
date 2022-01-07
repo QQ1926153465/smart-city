@@ -22,7 +22,7 @@ import java.util.List;
 public class CarouselController {
     @Autowired
     private ICarouselService service;
-
+    @Logging()
     @ApiOperation("根据id删除轮播图信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id",value = "id")
@@ -32,7 +32,7 @@ public class CarouselController {
         int i = service.deleteById(id);
         return ResultUtil.success(i);
     }
-
+    @Logging()
     @ApiOperation("分页查找轮播图信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum",value = "当前页",dataType = "int"),
@@ -44,7 +44,7 @@ public class CarouselController {
         PageInfo <Carousel> pageInfo = service.findAll(pageNum, pageSize);
         return ResultUtil.success(pageInfo);
     }
-
+    @Logging()
     @ApiOperation("查找所有已启用的轮播图")
     @GetMapping("/find/yes")
     public Result findAllYesCarousel(){
@@ -53,7 +53,7 @@ public class CarouselController {
     }
 
 
-
+    @Logging()
     //添加 提供添加信息  存放数据库 id值  mysql 主键自增
     @ApiOperation("保存轮播图信息")
     @ApiImplicitParams({
@@ -68,7 +68,7 @@ public class CarouselController {
         service.saveCarousel(carousel);
         return ResultUtil.success();
     }
-
+    @Logging()
     @ApiOperation("修改轮播信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "carouselId",value = "轮播图ID",dataType = "int"),

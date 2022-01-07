@@ -34,6 +34,7 @@ public class BaseConfigServiceImp implements IBaseConfigService {
         {
             throw new ServiceException("id不存在");
         }
+        mapper.updateByPrimaryKeySelective(baseConfig);
 //        for(int i=0;i<baseConfigss.size();i++)
 //        {
 //            if(id == baseConfigss.get(i).getConfigId())

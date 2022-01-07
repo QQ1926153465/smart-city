@@ -33,7 +33,15 @@ public class ArticleServicelmpl implements IArticleService {
 
     @Override
     public void saveOrUpdate(Article article) throws ServiceException {
-            mapper.updateByPrimaryKeySelective(article);
+         Article article1 = new Article();
+         article1 = mapper.selectByTitle(article.getArticleTitle());
+         if (article1!=null)
+         {
+             mapper.updateByPrimaryKeySelective(article);
+         }else {
+             mapper.insertSelective(article);
+         }
+
     }
     @Override
     public PageInfo<ArticleExtend> pageQueryArticleWithCategoryAndUser(int pageNum, int pageSize,Article article) throws ServiceException {

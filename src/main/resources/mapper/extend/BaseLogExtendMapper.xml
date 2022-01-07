@@ -21,6 +21,7 @@
         select
         <include refid="Base_Column_List" />
         from base_log
+        order by log_time desc
 
 
     </select>
