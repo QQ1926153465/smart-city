@@ -33,9 +33,9 @@ public class LogAspect {
      * 切入点：部分连接点
      */
 
-//execution(* com.briup.smartcity.web.controller..*.*(..)) &&
+//
 
-    @Pointcut("@annotation(Logging)")//使用注解编写哪些方法需要提供日志记录功能
+    @Pointcut(" execution(* com.briup.smartcity.web.controller..*.*(..)) && @annotation(Logging)")//使用注解编写哪些方法需要提供日志记录功能
     public void LogCupPoint(){
         //定义切入点规则
         //规则==方法
@@ -88,6 +88,7 @@ public class LogAspect {
 
 
     @Around("LogCupPoint()")
+
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object proceed = proceedingJoinPoint.proceed();
         System.out.println("开始环绕通知");

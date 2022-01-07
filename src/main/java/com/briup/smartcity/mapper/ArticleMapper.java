@@ -13,5 +13,8 @@ public interface ArticleMapper {
 
     int updateByPrimaryKeySelective(Article record);
 
-    int updateByPrimaryKey(Article record);
+    int updateByPrimaryKey(int record);
+
+    Article selectByTitle(String articleTitle);
+
 }

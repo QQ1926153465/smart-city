@@ -7,10 +7,6 @@ import java.util.List;
 public interface CarouselMapper {
     int deleteByPrimaryKey(Integer carouselId);
 
-
-
-    List<Carousel> findAllCarousel();
-
     List<Carousel> findYesCarousel();
 
     int insert(Carousel record);
@@ -19,8 +15,10 @@ public interface CarouselMapper {
 
     Carousel selectByPrimaryKey(Integer carouselId);
 
+
     int updateByPrimaryKeySelective(Carousel record);
 
     int updateByPrimaryKey(Carousel record);
 
+    List<Carousel> findallCarousel();
 }

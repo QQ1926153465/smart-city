@@ -1,6 +1,7 @@
 package com.briup.smartcity.web.controller;
 
 
+import com.briup.smartcity.aop.Logging;
 import com.briup.smartcity.bean.BaseLog;
 import com.briup.smartcity.service.IBaseLogService;
 import com.briup.smartcity.utils.Result;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+@Logging()
 @Api(tags = "日志模块")
 @RequestMapping("/auth/log")
 @RestController

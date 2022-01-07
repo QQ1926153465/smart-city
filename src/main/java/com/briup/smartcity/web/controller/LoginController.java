@@ -1,6 +1,8 @@
 package com.briup.smartcity.web.controller;
 
+import com.briup.smartcity.aop.Logging;
 import com.briup.smartcity.service.IBaseUserService;
+import com.briup.smartcity.utils.JwtUtil;
 import com.briup.smartcity.utils.Result;
 import com.briup.smartcity.utils.ResultUtil;
 import io.swagger.annotations.Api;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
     @Autowired
     private IBaseUserService service;
+
     @ApiOperation("登录系统")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username",value = "用户名" , dataType = "String"),
@@ -27,10 +30,13 @@ public class LoginController {
         return ResultUtil.success(token);
 
     }
+
+
+
     @ApiOperation("退出登录")
-    @PostMapping(value = "loginOut")
+    @PostMapping(value = "/logout")
     public Result loginOut(){
 
-        return ResultUtil.success();
+        return ResultUtil.success("退出成功");
     }
 }

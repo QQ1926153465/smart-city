@@ -17,6 +17,30 @@
     from base_config
     where config_id = #{configId,jdbcType=INTEGER}
   </select>
+
+
+
+
+  <select id="YesBaseConfig" resultMap="BaseResultMap">
+
+    select  <include refid="Base_Column_List" />
+    from base_config
+    where config_status=1
+
+
+
+  </select>
+  <select id="fingdAllByPageHeple" resultMap="BaseResultMap">
+
+    select  <include refid="Base_Column_List" />
+    from base_config
+
+
+
+
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from base_config
     where config_id = #{configId,jdbcType=INTEGER}
@@ -89,5 +113,10 @@
       config_icon = #{configIcon,jdbcType=VARCHAR},
       config_status = #{configStatus,jdbcType=INTEGER}
     where config_id = #{configId,jdbcType=INTEGER}
+  </update>
+  <update id="upcongficstatus"  parameterType="com.briup.smartcity.bean.BaseConfig">
+    update base_config
+    set config_status = #{status,jdbcType=INTEGER}
+    where config_id =  #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.briup.smartcity.mapper.extend.ArticleExtendMapper">
+
+
+    <resultMap id="ArticleMap" type="com.briup.smartcity.bean.Article">
+        <id column="article_id" jdbcType="INTEGER" property="articleId" />
+        <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+        <result column="article_content" jdbcType="VARCHAR" property="articleContent" />
+        <result column="article_publish_time" jdbcType="TIMESTAMP" property="articlePublishTime" />
+        <result column="article_read_times" jdbcType="INTEGER" property="articleReadTimes" />
+        <result column="article_status" jdbcType="INTEGER" property="articleStatus" />
+        <result column="article_thump_up" jdbcType="INTEGER" property="articleThumpUp" />
+        <result column="article_cover" jdbcType="VARCHAR" property="articleCover" />
+        <result column="article_user_id" jdbcType="INTEGER" property="articleUserId" />
+        <result column="article_category_id" jdbcType="INTEGER" property="articleCategoryId" />
+    </resultMap>
+
+    <resultMap id="categoryMap" type="com.briup.smartcity.bean.Category">
+        <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+        <result column="category_description" jdbcType="VARCHAR" property="categoryDescription" />
+        <result column="category_order" jdbcType="INTEGER" property="categoryOrder" />
+        <result column="category_parent_id" jdbcType="INTEGER" property="categoryParentId" />
+    </resultMap>
+
+    <resultMap id="BaseUserMap" type="com.briup.smartcity.bean.BaseUser">
+        <id column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+        <result column="realname" jdbcType="VARCHAR" property="realname" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="gender" jdbcType="INTEGER" property="gender" />
+        <result column="dob" jdbcType="DATE" property="dob" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="role" jdbcType="INTEGER" property="role" />
+    </resultMap>
+
+
+    <resultMap id="ArticleResultMap" type="com.briup.smartcity.bean.extend.ArticleExtend" extends="ArticleMap">
+        <association property="baseUser" resultMap="BaseUserMap"/>
+        <association property="category" resultMap="categoryMap"/>
+    </resultMap>
+
+
+    <select id="selectArticleWithCategoryAndUser" resultMap="ArticleResultMap">
+        SELECT
+            a.*,
+            b.*,
+            c.*
+        FROM
+            sc_article a
+                LEFT JOIN sc_category b ON a.article_category_id = b.category_id
+                LEFT JOIN base_user c ON a.article_user_id = c.user_id
+        WHERE
+            a.article_id = #{id};
+    </select>
+
+    <select id="findAll" resultMap="ArticleResultMap">
+        SELECT <include refid="Base_Column_List" />
+         FROM
+        sc_article
+        left JOIN sc_category on   sc_category.category_id = sc_article.article_category_id
+        <where>
+            <if test="articleCategoryId !=null">
+             and   sc_article.article_category_id = #{articleCategoryId,jdbcType=INTEGER}
+            </if>
+            <if test="articleStatus !=null">
+              and   sc_article.article_status = #{articleStatus,jdbcType=INTEGER}
+            </if>
+            <if test="articleTitle !=null">
+              and  sc_article.article_title like concat('%',#{articleTitle,jdbcType=VARCHAR},'%')
+
+            </if>
+        </where>
+    </select>
+    <select id="findAll2" resultMap="ArticleResultMap">
+      SELECT  * FROM
+       sc_article
+        where sc_article_status = 3
+
+    </select>
+    <sql id="Base_Column_List">
+        article_id,article_title,article_content,article_publish_time,article_read_times,article_status,article_thump_up,article_cover,article_user_id,article_category_id
+    </sql>
+
+</mapper>

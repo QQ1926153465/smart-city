@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.briup.smartcity.mapper.extend.CategoryExtendMapper">
+    <resultMap id="BaseResultMap" type="com.briup.smartcity.bean.Category">
+        <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+        <result column="category_description" jdbcType="VARCHAR" property="categoryDescription" />
+        <result column="category_order" jdbcType="INTEGER" property="categoryOrder" />
+        <result column="category_parent_id" jdbcType="INTEGER" property="categoryParentId" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        category_id, category_name, category_description, category_order, category_parent_id
+    </sql>
+    <select id="findAllCategory" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from sc_category
+    </select>
+    <delete id="batchDeleteCategroy" parameterType="int">
+        delete from sc_category where category_id in
+        <foreach collection="ids" item="id"  separator="," open="(" close=")">
+        #{id}
+        </foreach>
+    </delete>
+</mapper>

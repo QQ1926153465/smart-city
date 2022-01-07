@@ -3,6 +3,7 @@ package com.briup.smartcity.web.controller;
 
 import com.briup.smartcity.aop.Logging;
 import com.briup.smartcity.bean.BaseUser;
+import com.briup.smartcity.exception.ServiceException;
 import com.briup.smartcity.service.IBaseUserService;
 import com.briup.smartcity.service.IUserManagementService;
 import com.briup.smartcity.utils.Result;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+
 @Api(tags = "用户管理模块")
 @RestController
 @RequestMapping("/auth/user/")
@@ -33,6 +35,7 @@ public class UserManagementController {
     @ApiOperation("通过id删除用户")
     @ApiImplicitParam(name = "id",value = "需要删除的用户的id",dataType = "int")
     public Result deleteUserById(Integer id){
+
         int i = service.deleteUserById(id);
 
         return ResultUtil.success(i);
@@ -43,9 +46,9 @@ public class UserManagementController {
 
 
 
-
-    @GetMapping(value = "/page/query")
     @Logging()
+    @GetMapping(value = "/page/query")
+
     @ApiOperation("分页并模糊查询用户信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNum",value = "当前页面" , dataType = "int"),
@@ -80,7 +83,7 @@ public class UserManagementController {
 
 
 
-    @Logging()
+
     @PutMapping(value = "/update")
     @ApiOperation("更新用户基本信息")
     @ApiImplicitParams({

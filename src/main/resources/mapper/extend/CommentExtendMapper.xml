@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.briup.smartcity.mapper.extend.CommentExtendMapper">
+    <resultMap id="BaseResultMap" type="com.briup.smartcity.bean.Comment">
+        <id column="comment_id" jdbcType="INTEGER" property="commentId" />
+        <result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+        <result column="comment_time" jdbcType="TIMESTAMP" property="commentTime" />
+        <result column="comment_status" jdbcType="INTEGER" property="commentStatus" />
+        <result column="comment_user_id" jdbcType="INTEGER" property="commentUserId" />
+        <result column="comment_article_id" jdbcType="INTEGER" property="commentArticleId" />
+        <result column="comment_parent_id" jdbcType="INTEGER" property="commentParentId" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        comment_id, comment_content, comment_time, comment_status, comment_user_id, comment_article_id,
+    comment_parent_id
+    </sql>
+    <update id="checkComment">
+        UPDATE sc_comment set comment_status = #{param2} where comment_id = #{param1}
+
+    </update>
+    <select id="selectAllCommentByKeyword" resultMap="BaseResultMap">
+      SELECT <include refid="Base_Column_List"/>
+      from sc_comment
+     WHERE comment_content like CONCAT('%',#{keyword},'%')
+    </select>
+    <delete id="deleteCommentBySomeId">
+        DELETE
+        FROM sc_comment
+        <where>
+            <foreach collection="ids" open="comment_id in (" item="id" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
+</mapper>

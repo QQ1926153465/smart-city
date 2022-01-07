@@ -17,28 +17,25 @@
     from sc_carousel
     where carousel_id = #{carouselId,jdbcType=INTEGER}
   </select>
-    <select id="findAllCarousel" resultMap="BaseResultMap">
-
-      select <include refid="Base_Column_List" /> from sc_carousel
-
-
-    </select>
   <select id="findYesCarousel" resultMap="BaseResultMap">
-
-
-    select <include refid="Base_Column_List" /> from sc_carousel where carousel_status = 1;
-
-
-
+    select
+    <include refid="Base_Column_List" />
+    from sc_carousel
+    where carousel_status=1
+  </select>
+  <select id="findallCarousel" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sc_carousel
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sc_carousel
     where carousel_id = #{carouselId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.briup.smartcity.bean.Carousel">
-    insert into sc_carousel (carousel_id, carousel_name, carousel_info, 
+    insert into sc_carousel (carousel_id, carousel_name, carousel_info,
       carousel_url, carousel_status)
-    values (#{carouselId,jdbcType=INTEGER}, #{carouselName,jdbcType=VARCHAR}, #{carouselInfo,jdbcType=VARCHAR}, 
+    values (#{carouselId,jdbcType=INTEGER}, #{carouselName,jdbcType=VARCHAR}, #{carouselInfo,jdbcType=VARCHAR},
       #{carouselUrl,jdbcType=VARCHAR}, #{carouselStatus,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.briup.smartcity.bean.Carousel">

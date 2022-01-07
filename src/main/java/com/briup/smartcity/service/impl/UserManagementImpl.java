@@ -18,6 +18,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserManagementImpl implements IUserManagementService {
@@ -34,6 +36,9 @@ public class UserManagementImpl implements IUserManagementService {
     @Override
     public int deleteUserById(Integer id) {
         int i = mapper.deleteByPrimaryKey(id);
+        if (i==0){
+            throw new ServiceException("用户不存在");
+        }
         return i;
     }
 
@@ -62,9 +67,33 @@ public class UserManagementImpl implements IUserManagementService {
 
     @Override
     public int UpdateUserByUserName(BaseUser user) {
+        if(user.getTelephone().length()!=11)
+        {
+            throw new ServiceException("请输入11位手机号");
+        }else if(isMail(user.getEmail())==false){
+            throw new ServiceException("请输入正确的邮箱格式");
+        }
 
-        int i = mapper.updateByUsernameSelective(user);
-        return i;
+        else{
+            int i = mapper.updateByUsernameSelective(user);
+            return i;
+
+        }
+
+
+    }
+    public static boolean isMail(String str) {
+        boolean flag = false;
+        String regEx1 = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+        Pattern p;
+        Matcher m;
+        p = Pattern.compile(regEx1);
+        m = p.matcher(str);
+        if(m.matches())
+            flag = true;
+        else
+            System.out.println("输入邮箱格式错误......");
+        return flag;
     }
 
     @Override
